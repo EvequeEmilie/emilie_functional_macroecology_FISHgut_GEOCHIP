@@ -1,0 +1,58 @@
+---
+title: "Notebook of analyses"
+author: "Arthur Escalas"
+date: "1/10/2020"
+output: html_document
+---
+
+## 2020-01-10 Summary of the results and analyses to do for the revision in NEE
+
+These are the main steps of analyses that need to be improved for the revision:
+
+- try using different number of quantiles (5, 10, 15, 20)
+- try the effect of rarefying to 10 samples per ecosystem: 
+  Done for occupancy
+- compare results using jaccard and BC for composition analysis
+- compare grassland vs others
+- ask françois for model fits --> DONE
+- test effect of metadata on the model parameters
+- make a panel with models as function of various environmental variables
+- use directly genes occupancy instead of quantiles to fit the tokeshi test
+
+
+Below is a summary of what each script is doing: ------------------------------
+
+00_setup.R:
+  - define directory structure
+  - load packages and functions
+  - define global variables: names_sites, names_funct_levels, colors_category, etc.
+
+01_clean_and_normalize_data.R:
+  - Remove genes with less than 10 probes
+  - Remove two functional categories "Organic remediation", "Other category"
+  - generate the common label matrix
+  - generate several list of data: raw, pres-abs, logged, scaled
+  - clean the metadata and generate a table summarizing the available metadata
+
+02_generate_composition_data_rank_abundance.R:
+  - generate matrice genesXquantiles, for different numbes of quantiles (5, 10, 15, 20)
+  - generate tables of functionXquantiles, for different numbes of quantiles (5, 10, 15, 20)
+  - generate randomized genesXquantiles and functionXquantiles matrices
+
+03_generate_composition_data_frequency_occupancy.R:
+  - estimate occurrence and occupancy of genes in each site (data_gene_per_quantile.R), for different numbes of quantiles (5, 10, 15, 20)
+  - generate matrice genesXquantiles
+  - generate the genXoccupancy matrix
+
+04_rank_abundance_distribution.R
+
+05_frequency_occupancy_distribution.R:
+  - 
+
+
+
+Precise analyses to do: --------------------------------------------------------
+
+
+  
+
