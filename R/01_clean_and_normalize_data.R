@@ -47,9 +47,13 @@ maskLessThan15 <- ! geochip$Gene.name %in% lessThan15
 
 maskCateg <- ! geochip$Gene.category %in%  c("Other category")
 
+# remove the genes that are not characterized at the subcategories level
+
+mask_na <- ! is.na(geochip$Sub.category1)
+
 # match the two masks
 
-finalMask <- (maskLessThan15 + maskCateg) == 2 
+finalMask <- (maskLessThan15 + maskCateg + mask_na) == 3
 toRemove <- unique(geochip[! finalMask, 'Gene.name'])
 
 
@@ -74,7 +78,7 @@ names(geochip)[c(1, 2, 3, 4, 5)] <- c("gene_id", "funct_trait", "funct_category"
 
 write.csv(geochip, file = paste0(dir_res_01, "labels_geochip.csv"), row.names = F)
 
-          tmp <- data.frame(
+tmp <- data.frame(
   Ecological_process = do.call(c, lapply(split(geochip, geochip$funct_category), function(x) {
     length(unique(x$funct_process))
   })),
@@ -89,8 +93,6 @@ tmp <- tmp %>% rownames_to_column(var = "Broad_ecosystem_function")
 
 write.csv(tmp, file = paste0(dir_save, "table_distribution_of_genes_into_categories.csv"), row.names = F)
 
-write.csv(tmp, file = paste0(dir_save, "table_distribution_of_genes_into_categories.csv"), row.names = F)
-
 # 	MAKE A TABLE MATCHING ALL FUNCTIONAL LEVELS (gene, subcategory, category)
 
 tmp <- geochip %>% group_by(funct_category, funct_process, funct_trait) %>% tally()
@@ -99,12 +101,13 @@ write.csv(tmp, file = paste0(dir_save, "table_match_funct_levels.csv"), row.name
 
 
 #==================================================================================
-#PREPARE ABUNDANCE DATA FISH : RAWDATA_GEOCHIP                                    #
+#  PREPARE ABUNDANCE DATA FISH : RAWDATA_GEOCHIP                                    #
 #==================================================================================
 
 # Load the matrix
 abundance <- read.csv(paste0(dir_data, "rawdata_geochip.csv"), row.names = 1)
 
+abundance <- abundance[finalMask,]
 
 # Make a presence/absence data list
 abundance2 <- apply(abundance, 2, function(x) {
@@ -118,10 +121,12 @@ abundancelog <- log(abundance)
 abundancelog[abundancelog == "-Inf"] <- 0
 logabund <- round(abundancelog, 3)
 
+row.names(abundance) <- row.names(abundance2) <- row.names(abundancelog) <- geochip$gene_id
+
 # Save new csv for abundance presence/absence and abundance log 
-write.csv(abundance2, file = paste0(dir_save, "table_data_abundance_presabs.cvs"), row.names = F)
-write.csv(logabund, file = paste0(dir_save, "table_data_abundance_log.csv"), row.names = F)
-write.csv(abundance, file = paste0(dir_save, "rawdata_geochip.csv"), row.names = F)
+write.csv(abundance2, file = paste0(dir_save, "table_data_abundance_presabs.csv"), row.names = TRUE)
+write.csv(logabund, file = paste0(dir_save, "table_data_abundance_log.csv"), row.names = T)
+write.csv(abundance, file = paste0(dir_save, "rawdata_geochip.csv"), row.names = T)
 
 
 
@@ -146,3 +151,4 @@ write.csv(metadata, file = paste0(dir_save, "metadata.csv"), row.names = FALSE)
 ################################################################################
 #                             END OF SCRIPT                                    #
 ################################################################################
+

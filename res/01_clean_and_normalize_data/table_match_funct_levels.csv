@@ -2,10 +2,10 @@
 "Antibiotic resistance","Beta-lactamases","bla",526
 "Antibiotic resistance","Tetracycline resistance","Tet",254
 "Antibiotic resistance","Transporter","ABC_Ab_trp",103
+"Antibiotic resistance","Transporter","SMRP",1017
 "Antibiotic resistance","Transporter","hlyD",532
 "Antibiotic resistance","Transporter","mexB",93
 "Antibiotic resistance","Transporter","norM",168
-"Antibiotic resistance","Transporter","SMRP",1017
 "Antibiotic resistance","Vancomycin resistance","Van",22
 "Bioleaching","Arsenical resistance ","arsM",50
 "Bioleaching","Electron transport","fdx",27
@@ -27,17 +27,17 @@
 "Carbon cycling","Carbohydrate metabolism","sucC",127
 "Carbon cycling","Carbohydrate metabolism","xylA",296
 "Carbon cycling","Carbon degradation","lacc",512
-"Carbon cycling","Carbon fixation","CbbS",383
 "Carbon cycling","Carbon fixation","CODH",247
+"Carbon cycling","Carbon fixation","CbbS",383
 "Carbon cycling","Carbon fixation","fhs",123
 "Carbon cycling","Carbon fixation","pcc",721
 "Carbon cycling","Glycan biosynthesis","cga",130
-"Carbon cycling","Glycan degradation","abfB",455
-"Carbon cycling","Glycan degradation","abfB_fungi",125
-"Carbon cycling","Glycan degradation","cbh",204
 "Carbon cycling","Glycan degradation","Endochitinase",719
 "Carbon cycling","Glycan degradation","Endoglucanase",155
 "Carbon cycling","Glycan degradation","Exochitinase",78
+"Carbon cycling","Glycan degradation","abfB",455
+"Carbon cycling","Glycan degradation","abfB_fungi",125
+"Carbon cycling","Glycan degradation","cbh",204
 "Carbon cycling","Glycan degradation","manA",157
 "Carbon cycling","Glycan degradation","xlnB",184
 "Carbon cycling","Hydrocarbons degradation","assA",22
@@ -88,7 +88,6 @@
 "Metal Resistance","Tellurium","TerZ",154
 "Metal Resistance","Zinc","ZitB",53
 "Metal Resistance","Zinc","ZntA",463
-"Metal Resistance",NA,"merG",22
 "Nitrogen","Ammonia assimilation","gdh",132
 "Nitrogen","Ammonification","ureC",615
 "Nitrogen","Anammox","hzo",31
@@ -110,12 +109,12 @@
 "Nitrogen","Nitrogen fixation","glnA",1253
 "Nitrogen","Nitrogen fixation","nifH",1213
 "Organic Remediation","Aromatic amino-acid degradation","mauAB",70
+"Organic Remediation","Aromatic compound degradation","Arylesterase",310
+"Organic Remediation","Aromatic compound degradation","BpH",136
 "Organic Remediation","Aromatic compound degradation","akbF",80
 "Organic Remediation","Aromatic compound degradation","antA",32
-"Organic Remediation","Aromatic compound degradation","Arylesterase",310
 "Organic Remediation","Aromatic compound degradation","bclA",125
 "Organic Remediation","Aromatic compound degradation","benB",35
-"Organic Remediation","Aromatic compound degradation","BpH",136
 "Organic Remediation","Aromatic compound degradation","bphA",232
 "Organic Remediation","Aromatic compound degradation","cmuA",32
 "Organic Remediation","Aromatic compound degradation","fcbA",22
@@ -199,8 +198,6 @@
 "Organic Remediation","Tetrachloroethene and trichloroethene degradation","CprA",244
 "Organic Remediation","Thiocyanate degradation","scn",27
 "Organic Remediation","Xenobiotic degradation","xenA",71
-"Organic Remediation",NA,"alkJ",89
-"Organic Remediation",NA,"cumB",16
 "Other","Bacteriochlorophyll biosynthesis","BchY",78
 "Other","Exotic gut metabolism","cbh",217
 "Other","Phylogenetic marker","gyrB",1984

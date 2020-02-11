@@ -20,7 +20,6 @@
 ################################################################################
 
 # Load the common label matrix
-#CLM <- read.csv(paste0(dir_res_01, "table_common_label_matrix.csv"), row.names = 1)
 
 geochip <- read.csv(paste0(dir_res_01, "labels_geochip.csv"), row.names = 1)
 
@@ -30,7 +29,8 @@ table_match_funct_levels <- read.csv(paste0(dir_res_01, 'table_match_funct_level
 
 # Load the abundance data 
 
-table_data_abundance_log <- read.csv(paste0(dir_res_01, "table_data_abundance_log.csv"))
+table_data_abundance_log <- read.csv(paste0(dir_res_01, "table_data_abundance_log.csv"),
+                                     row.names = 1)
 
 # the directory to save the results
 dir_save <- dir_res_02
@@ -50,7 +50,7 @@ dir_save <- dir_res_02
 
 lapply(c(5, 10, 15, 20), function(num_q) {
   
-  mat_gene_per_quantiles <- getAbQuantId(abundance,
+  mat_gene_per_quantiles <- getAbQuantId(table_data_abundance_log,
                                  method = "trueQuant",
                                  nullModel = FALSE,
                                  num_of_quantiles = num_q)
@@ -58,9 +58,6 @@ lapply(c(5, 10, 15, 20), function(num_q) {
   saveRDS(mat_gene_per_quantiles, 
           file = paste0(dir_save, "matrices_gene_per_quantile_q", num_q,".rds"))
 })
-
-
-
 
 
 # ==============================================================================
