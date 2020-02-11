@@ -1,0 +1,266 @@
+"funct_category","funct_process","funct_trait","n"
+"Antibiotic resistance","Beta-lactamases","bla",526
+"Antibiotic resistance","Tetracycline resistance","Tet",254
+"Antibiotic resistance","Transporter","ABC_Ab_trp",103
+"Antibiotic resistance","Transporter","hlyD",532
+"Antibiotic resistance","Transporter","mexB",93
+"Antibiotic resistance","Transporter","norM",168
+"Antibiotic resistance","Transporter","SMRP",1017
+"Antibiotic resistance","Vancomycin resistance","Van",22
+"Bioleaching","Arsenical resistance ","arsM",50
+"Bioleaching","Electron transport","fdx",27
+"Bioleaching","Electron transport","korA",70
+"Bioleaching","Iron Fe","qcrA",23
+"Bioleaching","Others","ABC_I",23
+"Carbon cycling","Aromatic hydrocarbons catabolism ","vanA",252
+"Carbon cycling","Aromatic hydrocarbons catabolism ","vdh",51
+"Carbon cycling","Carbohydrate degradation","Beta glucosidase",238
+"Carbon cycling","Carbohydrate degradation","CDH",59
+"Carbon cycling","Carbohydrate degradation","glx",104
+"Carbon cycling","Carbohydrate degradation","nplT",241
+"Carbon cycling","Carbohydrate metabolism","AceA",485
+"Carbon cycling","Carbohydrate metabolism","AceB",648
+"Carbon cycling","Carbohydrate metabolism","amyA",995
+"Carbon cycling","Carbohydrate metabolism","amyS",271
+"Carbon cycling","Carbohydrate metabolism","pflB",236
+"Carbon cycling","Carbohydrate metabolism","pulA",224
+"Carbon cycling","Carbohydrate metabolism","sucC",127
+"Carbon cycling","Carbohydrate metabolism","xylA",296
+"Carbon cycling","Carbon degradation","lacc",512
+"Carbon cycling","Carbon fixation","CbbS",383
+"Carbon cycling","Carbon fixation","CODH",247
+"Carbon cycling","Carbon fixation","fhs",123
+"Carbon cycling","Carbon fixation","pcc",721
+"Carbon cycling","Glycan biosynthesis","cga",130
+"Carbon cycling","Glycan degradation","abfB",455
+"Carbon cycling","Glycan degradation","abfB_fungi",125
+"Carbon cycling","Glycan degradation","cbh",204
+"Carbon cycling","Glycan degradation","Endochitinase",719
+"Carbon cycling","Glycan degradation","Endoglucanase",155
+"Carbon cycling","Glycan degradation","Exochitinase",78
+"Carbon cycling","Glycan degradation","manA",157
+"Carbon cycling","Glycan degradation","xlnB",184
+"Carbon cycling","Hydrocarbons degradation","assA",22
+"Carbon cycling","Hydrocarbons degradation","limA",36
+"Carbon cycling","Lignin degradation","mnp",70
+"Carbon cycling","Methane oxidation","mmoX",32
+"Carbon cycling","Methane oxidation","pmoA",191
+"Carbon cycling","Methanogenesis","mcrA",255
+"Carbon cycling","Pectin degradation","pelA",58
+"Carbon cycling","Peptidoglycan degradation","lytD",439
+"Energy process","Cytochrome","Cytochrome b",25
+"Energy process","Cytochrome","Cytochrome c",603
+"Energy process","Electron transport","NADH_UO",24
+"Energy process","Electron transport","nqo",16
+"Energy process","Electron transport","trxA",31
+"Energy process","Hydrogenase","DpiB",115
+"Energy process","Hydrogenase","hupC",54
+"Energy process","P450","p450",34
+"Metal Resistance","Aluminum","ALR1",138
+"Metal Resistance","Arsenic","aioA",94
+"Metal Resistance","Arsenical resistance ","arsA",47
+"Metal Resistance","Arsenical resistance ","arsB",82
+"Metal Resistance","Arsenical resistance ","arsC",537
+"Metal Resistance","Cadmium","CadA",481
+"Metal Resistance","Cadmium","cadBD",76
+"Metal Resistance","Cadmium Cobalt Zinc resistance","czcA",674
+"Metal Resistance","Cadmium Cobalt Zinc resistance","czcC",36
+"Metal Resistance","Cadmium Cobalt Zinc resistance","czcD",549
+"Metal Resistance","Chromium","ChrA",965
+"Metal Resistance","Cobalt","CorC",61
+"Metal Resistance","Copper","CopA",1378
+"Metal Resistance","Copper","CueO",28
+"Metal Resistance","Copper","CusA",34
+"Metal Resistance","Lead","pbrA",41
+"Metal Resistance","Mercury","mer",490
+"Metal Resistance","Mercury","merB",31
+"Metal Resistance","Mercury","merC",17
+"Metal Resistance","Mercury","merP",66
+"Metal Resistance","Mercury","merR",7
+"Metal Resistance","Miscellaneous","SmtA",30
+"Metal Resistance","Nickel","nreB",36
+"Metal Resistance","Silver","silA",45
+"Metal Resistance","Silver","silC",268
+"Metal Resistance","Silver","silP",37
+"Metal Resistance","Tellurium","TehB",250
+"Metal Resistance","Tellurium","TerC",381
+"Metal Resistance","Tellurium","TerD",309
+"Metal Resistance","Tellurium","TerZ",154
+"Metal Resistance","Zinc","ZitB",53
+"Metal Resistance","Zinc","ZntA",463
+"Metal Resistance",NA,"merG",22
+"Nitrogen","Ammonia assimilation","gdh",132
+"Nitrogen","Ammonification","ureC",615
+"Nitrogen","Anammox","hzo",31
+"Nitrogen","Assimilatory N reduction","napA",271
+"Nitrogen","Assimilatory N reduction","nasA",153
+"Nitrogen","Assimilatory N reduction","nirA",126
+"Nitrogen","Denitrification","narG",852
+"Nitrogen","Denitrification","nirS",518
+"Nitrogen","Denitrification","norB",82
+"Nitrogen","Denitrification","nosZ",281
+"Nitrogen","Dissimilatory N reduction","nrfA",306
+"Nitrogen","Nitrate assimilation","narH",138
+"Nitrogen","Nitrate assimilation","narI",275
+"Nitrogen","Nitrate assimilation","narJ",83
+"Nitrogen","Nitrate assimilation","nirB",71
+"Nitrogen","Nitrate assimilation","nirK",435
+"Nitrogen","Nitrification","amoA",1183
+"Nitrogen","Nitrification","hao",39
+"Nitrogen","Nitrogen fixation","glnA",1253
+"Nitrogen","Nitrogen fixation","nifH",1213
+"Organic Remediation","Aromatic amino-acid degradation","mauAB",70
+"Organic Remediation","Aromatic compound degradation","akbF",80
+"Organic Remediation","Aromatic compound degradation","antA",32
+"Organic Remediation","Aromatic compound degradation","Arylesterase",310
+"Organic Remediation","Aromatic compound degradation","bclA",125
+"Organic Remediation","Aromatic compound degradation","benB",35
+"Organic Remediation","Aromatic compound degradation","BpH",136
+"Organic Remediation","Aromatic compound degradation","bphA",232
+"Organic Remediation","Aromatic compound degradation","cmuA",32
+"Organic Remediation","Aromatic compound degradation","fcbA",22
+"Organic Remediation","Aromatic compound degradation","gcdB",81
+"Organic Remediation","Aromatic compound degradation","hdnO",40
+"Organic Remediation","Aromatic compound degradation","hmgA",212
+"Organic Remediation","Aromatic compound degradation","hmgB",199
+"Organic Remediation","Aromatic compound degradation","hmgC",229
+"Organic Remediation","Aromatic compound degradation","mdlA",278
+"Organic Remediation","Aromatic compound degradation","mdlB",49
+"Organic Remediation","Aromatic compound degradation","nahA",139
+"Organic Remediation","Aromatic compound degradation","ntaA",446
+"Organic Remediation","Aromatic compound degradation","oxdB",27
+"Organic Remediation","Aromatic compound degradation","pchCF",27
+"Organic Remediation","Aromatic compound degradation","pnbA",75
+"Organic Remediation","Aromatic compound degradation","rhd",54
+"Organic Remediation","Aromatic compound degradation","todC",22
+"Organic Remediation","Aromatic compound metabolism","Apc",15
+"Organic Remediation","Aromatic compound metabolism","xylB",107
+"Organic Remediation","Aromatic hydrocarbons catabolism ","Acd",356
+"Organic Remediation","Aromatic hydrocarbons catabolism ","bco",109
+"Organic Remediation","Aromatic hydrocarbons catabolism ","benA",103
+"Organic Remediation","Aromatic hydrocarbons catabolism ","benD",31
+"Organic Remediation","Aromatic hydrocarbons catabolism ","bphA",5
+"Organic Remediation","Aromatic hydrocarbons catabolism ","bphD",65
+"Organic Remediation","Aromatic hydrocarbons catabolism ","bphF",96
+"Organic Remediation","Aromatic hydrocarbons catabolism ","catA",399
+"Organic Remediation","Aromatic hydrocarbons catabolism ","catB",255
+"Organic Remediation","Aromatic hydrocarbons catabolism ","catE",125
+"Organic Remediation","Aromatic hydrocarbons catabolism ","cbdA",48
+"Organic Remediation","Aromatic hydrocarbons catabolism ","chnB",180
+"Organic Remediation","Aromatic hydrocarbons catabolism ","chqB",126
+"Organic Remediation","Aromatic hydrocarbons catabolism ","hcaB",58
+"Organic Remediation","Aromatic hydrocarbons catabolism ","ligA",154
+"Organic Remediation","Aromatic hydrocarbons catabolism ","linC",115
+"Organic Remediation","Aromatic hydrocarbons catabolism ","mdlC",230
+"Organic Remediation","Aromatic hydrocarbons catabolism ","mdlD",39
+"Organic Remediation","Aromatic hydrocarbons catabolism ","mhpA",43
+"Organic Remediation","Aromatic hydrocarbons catabolism ","mhpC",28
+"Organic Remediation","Aromatic hydrocarbons catabolism ","nagG",513
+"Organic Remediation","Aromatic hydrocarbons catabolism ","nagI",149
+"Organic Remediation","Aromatic hydrocarbons catabolism ","nagK",43
+"Organic Remediation","Aromatic hydrocarbons catabolism ","nagL",21
+"Organic Remediation","Aromatic hydrocarbons catabolism ","nahD",64
+"Organic Remediation","Aromatic hydrocarbons catabolism ","nahF",22
+"Organic Remediation","Aromatic hydrocarbons catabolism ","nbaC",63
+"Organic Remediation","Aromatic hydrocarbons catabolism ","pcaG",292
+"Organic Remediation","Aromatic hydrocarbons catabolism ","pcpB",43
+"Organic Remediation","Aromatic hydrocarbons catabolism ","pheA",294
+"Organic Remediation","Aromatic hydrocarbons catabolism ","phtA",137
+"Organic Remediation","Aromatic hydrocarbons catabolism ","phtD",39
+"Organic Remediation","Aromatic hydrocarbons catabolism ","pobA",246
+"Organic Remediation","Aromatic hydrocarbons catabolism ","tfdB",26
+"Organic Remediation","Aromatic hydrocarbons catabolism ","tfdF",80
+"Organic Remediation","Aromatic hydrocarbons catabolism ","tmo",52
+"Organic Remediation","Aromatic hydrocarbons catabolism ","todF",31
+"Organic Remediation","Aromatic hydrocarbons catabolism ","xlnD",17
+"Organic Remediation","Aromatic hydrocarbons catabolism ","xylC",46
+"Organic Remediation","Aromatic hydrocarbons catabolism ","xylG",62
+"Organic Remediation","Aromatic hydrocarbons catabolism ","xylJ",33
+"Organic Remediation","Biopolymer metabolism","PhaB",242
+"Organic Remediation","Chlorinated solvents","dehH",104
+"Organic Remediation","Chlorinated solvents","exaA",178
+"Organic Remediation","Halogenated aliphatic compounds","linB",307
+"Organic Remediation","Herbicides related compound","atzA",394
+"Organic Remediation","Herbicides related compound","atzB",181
+"Organic Remediation","Herbicides related compound","atzC",91
+"Organic Remediation","Herbicides related compound","atzD",26
+"Organic Remediation","Herbicides related compound","atzE",18
+"Organic Remediation","Hydrocarbons degradation","chnA",38
+"Organic Remediation","Hydrocarbons metabolism","alkB",237
+"Organic Remediation","Hydrocarbons metabolism","alkH",98
+"Organic Remediation","Nitrogen compounds","AmiE",40
+"Organic Remediation","Nitrogen compounds","nitA",295
+"Organic Remediation","Nitrogen compounds","nthA",233
+"Organic Remediation","Organic compound","phnM",337
+"Organic Remediation","Organophosphate degradation","php",35
+"Organic Remediation","Organosulphur degradation","tauD",375
+"Organic Remediation","Others","dmsA",202
+"Organic Remediation","Polycyclic aromatics","bphC",74
+"Organic Remediation","Tetrachloroethene and trichloroethene degradation","CprA",244
+"Organic Remediation","Thiocyanate degradation","scn",27
+"Organic Remediation","Xenobiotic degradation","xenA",71
+"Organic Remediation",NA,"alkJ",89
+"Organic Remediation",NA,"cumB",16
+"Other","Bacteriochlorophyll biosynthesis","BchY",78
+"Other","Exotic gut metabolism","cbh",217
+"Other","Phylogenetic marker","gyrB",1984
+"Phosphorus","Phosphorus utilization","phy",66
+"Phosphorus","Phosphorus utilization","ppk",435
+"Phosphorus","Phosphorus utilization","ppx",673
+"Stress","Cold shock","cspA",34
+"Stress","Cold shock","cspB",16
+"Stress","Glucose limitation","bglH",34
+"Stress","Glucose limitation","bglP",38
+"Stress","Heat shock","clpC",379
+"Stress","Heat shock","dnaK",222
+"Stress","Heat shock","groEL",129
+"Stress","Heat shock","groES",31
+"Stress","Heat shock","grpE",504
+"Stress","Heat shock","hrcA",526
+"Stress","Heat shock","rpoD",1532
+"Stress","Heat shock","rpoE",1588
+"Stress","Heat shock","rpoH",385
+"Stress","Heat shock","rpoS",262
+"Stress","Mercury","merR",124
+"Stress","Osmotic stress","opuE",22
+"Stress","Osmotic stress","proV",315
+"Stress","Osmotic stress","proW",15
+"Stress","Osmotic stress","proX",43
+"Stress","Oxidative stress response","ahpF",312
+"Stress","Oxygen limitation","arcA",59
+"Stress","Oxygen limitation","arcB",43
+"Stress","Oxygen limitation","cydA",114
+"Stress","Oxygen limitation","cydB",143
+"Stress","Oxygen stress","ahpC",799
+"Stress","Oxygen stress","fnr",1914
+"Stress","Oxygen stress","katA",61
+"Stress","Oxygen stress","katE",746
+"Stress","Oxygen stress","oxyR",443
+"Stress","Oxygen stress","perR",27
+"Stress","Phosphate limitation","phoA",196
+"Stress","Phosphate limitation","phoB",515
+"Stress","Phosphate limitation","pstA",624
+"Stress","Phosphate limitation","pstB",1969
+"Stress","Phosphate limitation","pstC",684
+"Stress","Phosphate limitation","pstS",285
+"Stress","Protein stress","ctsR",139
+"Stress","Radiation stress","obgE",1062
+"Stress","Response to C N P S exhaustion","usp",19
+"Stress","Temperature response","htpX",24
+"Sulphur","Reduction of sulfite to sulfide","dsrA",1149
+"Sulphur","Reduction of sulfite to sulfide","dsrB",773
+"Sulphur","Sulphate reduction or sulphur oxidation","AprA",281
+"Sulphur","Sulphate reduction or sulphur oxidation","AprB",98
+"Sulphur","Sulphur oxidation","sox",414
+"Virulence","Adhesin","aidA",92
+"Virulence","Aerobactin biosynthesis","iuc",98
+"Virulence","Bacteriocin transport","tonB",581
+"Virulence","Capsule biosynthesis","cap",311
+"Virulence","Colonization factor","acfA",25
+"Virulence","Hemolysin","hlyA",511
+"Virulence","Invasion","InvProt",57
+"Virulence","Pilin","Pilin",845
+"Virulence","Secretion","TTSS",223
+"Virulence","Surface protein","srt",236
+"Virulence","Toxin","cdtA",59
+"Virulence","Virulence protein","irgA",55

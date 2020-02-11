@@ -30,6 +30,9 @@ dir_data   <- paste0("data/")
 dir_res    <- paste0("res/")
 dir_script <- paste0("R/")
 
+dir.create(dir_data)
+dir.create(dir_res)
+
 ################################################################################
 #	DEFINE WORKING DIRECTORIES                                                   #
 ################################################################################
@@ -47,6 +50,7 @@ dir_list <- list( dir_res_01 = paste0(dir_res, "01_clean_and_normalize_data/"),
                   dir_res_09 = paste0(dir_res, "09_function_distribution_abundance_occupancy/"),
                   dir_res_10 = paste0(dir_res, "10_/")
 )
+
 lapply(dir_list, dir.create, showWarnings = FALSE)
 lapply(names(dir_list), function(x) {
   assign(x, dir_list[[x]], envir = .GlobalEnv)
@@ -81,28 +85,26 @@ load_libraries(libs)
 
 ## get files and extract
 
-mt_url <- "https://github.com/weecology/macroecotools/archive/master.zip"
-dir.create(paste0("libs","macroecotools"))
-mt_file <- paste0("libs","macroecotools","master.zip")
-download.file(url = mt_url, destfile = mt_file)
-unzip(mt_file, exdir = paste0("libs","macroecotools"))
-
-## python modules
-py_install("matplotlib")
-py_install("pandas")
-py_install("scipy")
+# mt_url <- "https://github.com/weecology/macroecotools/archive/master.zip"
+# dir.create(file.path("libs"))
+# dir.create(file.path("libs","macroecotools"))
+# mt_file <- file.path("libs","macroecotools","master.zip")
+# download.file(url = mt_url, destfile = mt_file)
+# unzip(mt_file, exdir = file.path("libs","macroecotools"))
+# 
+# ## python modules
+# py_install("matplotlib")
+# py_install("pandas")
+# py_install("scipy")
 
 ## source libraries
 
-
-
-reticulate::source_python(paste0("libs", "macroecotools",
+reticulate::source_python(file.path("libs", "macroecotools",
                                     "macroecotools-master",
                                     "macroecotools",
                                     "macroecotools.py"))
 
-
-reticulate::source_python(paste0("libs", "macroecotools",
+reticulate::source_python(file.path("libs", "macroecotools",
                                     "macroecotools-master",
                                     "macroeco_distributions",
                                     "macroeco_distributions.py"))
@@ -112,25 +114,15 @@ reticulate::source_python(paste0("libs", "macroecotools",
 # GLOBAL VARIABLES                                                             #
 ################################################################################
 
-# names of every site
+# names of RAD models
+rad_models <- c("Logseries untruncated", "Poisson lognormal", "Negative binomial", "Zipf distribution")
+rad_models_short <- c("logser", "pln", "negbin", "zipf")
+names(rad_models_short) <- rad_models
 
-names_sites <- list("AKC", "AKG", "BC", "JRGCE", "OK", 
-                    "AM", "CE", "SNNRf","SNNRs", "TB")
-names(names_sites) <- names_sites
+# names of different habitats
 
-names_sites_cplte <- c("CiPHER", "Permafrost thaw gradient", "BioCON",
-                       "Jasper Ridge GC experiment", "KAEFS warming experiment", 
-                       "Amazonian pasture", "HAMERS elevation gradient", 
-                       "Shennongjia Natural Reserve-Forest",
-                       "Shennongjia Natural Reserve-Shrubland",
-                       "HAMERS transplant experiment") %>% setNames(names_sites)
-
-# vector with number of samples per site
-
-vect_num_sple_per_site <- c(40, 107, 296, 128, 12, 24, 78, 43, 30, 60)
-# rename vector : names_sites
-names(vect_num_sple_per_site) <- names_sites
-
+names_habitats <- c("fish", "sediment", "water")
+names(names_habitats) <- c("fish", "sediment", "water")
 
 # names of functional levels
 names_funct_levels <- c("funct_category", "funct_process", "funct_trait")
@@ -156,13 +148,6 @@ names(colors_category) <- c("Antibiotic resistance", "Carbon cycling",
                             "Nitrogen cycling", "Phosphorus cycling",
                             "Stress",  "Sulphur cycling", "Virulence")
 
-# Define sites colors
-colors_sites <- c("#0C14A2", "#7C43C8", "#06B0BC", "#1874CD", "#00FFFF",
-                  "#159716", "#EE3A8C", "#B71A16", "#FFA500", "#EE6116")
-names(colors_sites) <- names_sites
-
-colors_grey <- rep("#4D4D4D", length(names_sites))
-names(colors_grey) <- names_sites
 
 ################################################################################
 #                             END OF SCRIPT                                    #

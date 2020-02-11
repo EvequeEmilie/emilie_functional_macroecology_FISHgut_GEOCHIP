@@ -57,7 +57,8 @@ dir_save <- dir_res_03
 
 lapply(c(5, 10, 12, 15, 20), function(num_q) {
   
-  data_occupancy <- getOccupancyTables(table_abundance_presabs, CLM = geochip, num_quants = num_q)
+  data_occupancy <- getOccupancyTables(table_abundance_presabs, CLM = geochip, 
+                                       num_quants = num_q)
   saveRDS(data_occupancy, 
           file = paste0(dir_save, "data_occupancy_q", num_q,".rds"))
 }) 

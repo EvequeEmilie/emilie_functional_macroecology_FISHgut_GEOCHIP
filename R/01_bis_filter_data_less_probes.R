@@ -38,7 +38,7 @@ for(i in 1:3){
   x=c(10,15,20)[i]
   tab <- filter(tmp, n > x)
   dim(tab)
-  ls_toto[[i]]=table(tab$funct_category        )
+  ls_toto[[i]]=table(tab$funct_category)
 }
 
 #

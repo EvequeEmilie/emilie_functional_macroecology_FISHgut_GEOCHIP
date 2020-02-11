@@ -28,7 +28,7 @@ abundance <- read.csv(paste0(dir_res_01, "rawdata_geochip.csv"))
 
 # Load metadata
 
-metadata <- read.csv(paste0(dir_res_01, "metadata.csv"), row.names = 1)
+metadata <- read.csv(paste0(dir_res_01, "metadata.csv"))
 
 # the directory to save the results
 
@@ -41,33 +41,34 @@ dir_save <- dir_res_04
 #
 ################################################################################
 
-table_rank_abundance_mean <- do.call(cbind, lapply(abundance, function(X) { 
-  apply(x, 1, function(x) mean(x))
-}))
+table_rank_abundance_sum <- apply(abundance, 1, sum)
 
-table_rank_abundance_sum <- do.call(cbind, lapply(abundance, function(X) { 
-  apply(x, 1, sum) 
-}))
+# # Create a table with the mean of colonne data abundance 
+# 
+# table_rank_abundance_mean <- abundance %>% summarise_all(funs(mean))
+# 
+# #Create table with the sum of colonne data abundance 
+# 
+# table_rank_abundance_sum <- abundance %<% summarise(nb=n())
 
+# sum the abundance of genes in each habitat
 
-# Create a table with the mean of colonne data abundance 
+table_gene_abundance_habitat <- do.call(cbind, lapply(levels(metadata$Type), function(x) {
+  apply(abundance[, metadata$Type == x], 1, sum)
+})) 
+colnames(table_gene_abundance_habitat) <- names_habitats
 
-table_rank_abundance_mean <- abundance %>% summarise_all(funs(mean))
-
-#Create table with the sum of colonne data abundance 
-
-table_rank_abundance_sum <- abundance %<% summarise(nb=n())
 
 # Save data 
-saveRDS(table_rank_abundance_mean,
-        file = paste0(dir_save, "table_rank_abundance_mean.rds"))
 saveRDS(table_rank_abundance_sum, 
         file = paste0(dir_save, "table_rank_abundance_sum.rds"))
+saveRDS(table_gene_abundance_habitat, 
+        file = paste0(dir_save, "table_rank_abundance_sum_habitats.rds"))
 
 # ==============================================================================
 #  Fit several RAD models using macroecotools
 
-"https://github.com/weecology/macroecotools/archive/master.zip"
+# "https://github.com/weecology/macroecotools/archive/master.zip"
 #from https://github.com/weecology/sad-comparison/blob/master/sad-comparisons.py
 
 # SAD models and packages used:
@@ -86,30 +87,47 @@ saveRDS(table_rank_abundance_sum,
 dir_radfit <- paste0(dir_save, "radfit/")
 dir.create(dir_radfit)
 
+dir.create(paste0(dir_save, "radfit/", "samples/" ))
+
+# transpose data
+
+rad_tab <- t(abundance)
+row.names(rad_tab) <- names(abundance)
+
 # Loop on each sample and fit RAD models
 
-for (i in row.names(rads_tab)) {
-  
-  x <- rads_tab[i, ]
+mclapply(row.names(rad_tab), function(i) {
+  x <- rad_tab[i, ]
   cat("fitting RAD models on community", i, "\n")
-  fit <- radfit(x, model = c("Null", "Preemption", "Lognormal", "Zipf"))
-  saveRDS(fit, file = paste0(dir_radfit, i, ".rds"))
-}
-
+  fit <- we_rad_fit(x)
+  save(fit, file = file.path(dir_radfit, "samples", i))
+}, mc.cores = 7)
 
 # ------------------------------------------------------------------------------
-# for each ecosystem
+# for each sample type
 # ------------------------------------------------------------------------------
 
-fit_ecosystem <- lapply(names_sites, function(nm_site) {
-  radfit(round(table_sum_gene_abundance[, nm_site]), model = c("Null", "Preemption", "Lognormal", "Zipf"))
+dir.create(paste0(dir_res_04, "radfit/", "habitats/" ))
+
+fit_habitat <- lapply(names_habitats, function(x) {
+  we_rad_fit(table_gene_abundance_habitat[, x])
 })
 
-save(fit_ecosystem, file = paste0(dir_save, "res_radfit_ecosystem_sum"))
+lapply(names(fit_habitat), function(f){
+  obj <- fit_habitat[[f]]
+  save(obj, file = file.path(dir_radfit, "habitats", f))
+})
+
+# ------------------------------------------------------------------------------
+# for the whole ecosystem
+# ------------------------------------------------------------------------------
+
+fit <- we_rad_fit(table_rank_abundance_sum)
+save(fit, file = file.path(dir_radfit, "ecosystem"))
 
 
 # ==============================================================================
-# Look at the results
+# Analysing the results
 # ==============================================================================
 
 # ------------------------------------------------------------------------------
@@ -118,163 +136,98 @@ save(fit_ecosystem, file = paste0(dir_save, "res_radfit_ecosystem_sum"))
 
 # Load the fitted models into a list
 
-files <- rownames(rads_tab)
+s_files <- list.files(paste0(dir_res_04, "radfit/", "samples/" ))
 
-rad_list <- lapply(files, function(x) {
-  load(paste0(dir_radfit, x))
+rad_list <- lapply(s_files, function(x) {
+  load(paste0(dir_res_04, "radfit/", "samples/", x))
   fit
-}) %>% setNames(files)
+}) %>% setNames(s_files)
 
-# save(rad_list, file = paste0(dir_save, "rad_list.R"))
+# save(rad_list, file = paste0(dir_res_04, "rad_list.R"))
 
-# Get a table of models aic for each community
+# Get a table of models aic, delta_aics and aic_weights for each community
 
-tab_modaic_rad <- do.call(rbind, lapply(rad_list, function(fit) {
-  do.call(c, lapply(fit$models, function(xx) xx$aic))
-}))
+list_aic_samples <- lapply(rad_list, function(fit) {
+  
+  AIC_values <- unlist(fit$AICc)
+  names(AIC_values) <- rad_models
+  
+  aic_comp(AIC_values)
+  
+})
 
 # Get the best model for each community
 
-names_best_models <- apply(tab_modaic_rad, 1, function(x) {
-  names(x)[which(x == min(x, na.rm = TRUE))]
-})
+names_best_models <- do.call(c, lapply(list_aic_samples, function(x) {
+  rownames(x)[which(x$best_mod == 1)]
+}))
 
 # Count the number of times each model is selected in each site
 
-counts_mod <- tapply(names_best_models, factor_samples, function(x) {
+counts_mod <- tapply(names_best_models, metadata$Site, function(x) {
   table(factor(x, levels = unique(names_best_models)))
-}) %>% bind_rows() %>% t() %>% as.data.frame()%>% setNames(c("Zipf","Lognormal"))
+}) %>% bind_rows() %>% t() %>% as.data.frame() #%>% setNames(c("Zipf","Lognormal"))
 
-write.csv(counts_mod, file = paste0(res_dir_02, "table_counts_of_best_models.csv"))
+write.csv(counts_mod, file = paste0(dir_res_04, "table_counts_of_best_models.csv"))
 
 # Make a table with all the models coefficients
 
 tab_mod_coeff <- do.call(rbind, lapply(rad_list, function(X) {
-  do.call(c, lapply(X$models, coefficients))
-})) %>% as.data.frame()
+  X$parameters[[2]] %>% setNames(c("mu","sigma"))
+})) %>% as.data.frame() %>% rownames_to_column(var = "Sample") %>% 
+  left_join(metadata, by = "Sample")
 
-write.csv(tab_mod_coeff, file = paste0(dir_save, 
-                                       "tab_mod_coeff_per_community.csv"))
+write.csv(tab_mod_coeff, file = paste0(dir_res_04, 
+                                       "table_model_coeff_per_community.csv"))
 
-# Analyse effect of metadata on the model parameters ---------------------------
-
-# effect of categorical variables
-
-vars_factor <- names(metadata)[c(1,2,3,8,9)]
-
-res_kw_categvar <- lapply(vars_factor, function(x) {
-  kruskal.test(tab_mod_coeff$Lognormal.log.sigma ~ metadata[, x])[1:3]
-}) %>% bind_rows() %>%
-  mutate(variable = vars_factor) %>% as.data.frame()
-
-# pairwise test between groups
-
-res_dunn_categvar <- lapply(lapply(vars_factor[1:3], function(x) {
-  dunn.test(tab_mod_coeff$Lognormal.log.sigma, metadata[, x], altp = TRUE)
-}), function(X) {  do.call(cbind, X[c(5,2,3)])}) %>% setNames(vars_factor[1:3])
-
-
-# effect of continous variables
-
-vars_cont <- names(metadata)[c(7:15)]
-
-fit_contvar <- lapply(vars_cont, function(x) {
-  lm(tab_mod_coeff$Lognormal.log.sigma ~ metadata[, x])
-}) %>% setNames(vars_cont)
-
-res_aov_contvar <- lapply(fit_contvar, function(x) { summary(aov(x))})
-
-
-# plot model slope as function of metadata
-
-par(mfrow = c(3,3), mar = c(4,4,1,1), oma = c(1,1,1,1), las = 1, mgp = c(2,0.5,0))
-
-lapply(vars_factor, function(x) {
-  boxplot(tab_mod_coeff$Lognormal.log.sigma ~ metadata[, x], 
-          ylab = "Model slope", xlab = "")
-})
-lapply(vars_cont, function(x) {
-  plot(tab_mod_coeff$Lognormal.log.sigma ~ metadata[, x],
-       ylab = "Model slope", xlab = x)
-})
-
-# Maybe keep only the 3 first categorical variables and remove CN
 
 # ------------------------------------------------------------------------------
-# for each ecosystem
+# for each habitat
 # ------------------------------------------------------------------------------
+
+h_files <- list.files(paste0(dir_res_04, "radfit/", "habitats/" ))
+
+rad_list <- lapply(h_files, function(x) {
+  load(paste0(dir_res_04, "radfit/", "habitats/", x))
+  obj
+}) %>% setNames(h_files)
 
 # Get a table of models aic for each community
 
-tab_modaic_rad <- do.call(rbind, lapply(fit_ecosystem, function(fit) {
-  do.call(c, lapply(fit$models, function(xx) xx$aic))
-}))
+list_aic_habitat <- lapply(rad_list, function(fit) {
+  
+  AIC_values <- unlist(fit$AICc)
+  names(AIC_values) <- rad_models
+  
+  aic_comp(AIC_values)
+  
+})
 
 # Get the best model for each community
 
-names_best_models <- apply(tab_modaic_rad, 1, function(x) {
-  names(x)[which(x == min(x, na.rm = TRUE))]
-})
+names_best_models <- do.call(c, lapply(list_aic_habitat, function(x) {
+  rownames(x)[which(x$best_mod == 1)]
+}))
 
 # Make a table with all the models coefficients
 
-tab_mod_coeff <- do.call(rbind, lapply(fit_ecosystem, function(X) {
-  do.call(c, lapply(X$models, coefficients))
-})) %>% as.data.frame()
+tab_mod_coeff <- do.call(rbind, lapply(rad_list, function(X) {
+  X$parameters[[2]] %>% setNames(c("mu","sigma"))
+})) %>% as.data.frame() %>% rownames_to_column(var = "Site")
 
-write.csv(tab_mod_coeff, file = paste0(dir_save, 
-                                       "tab_mod_coeff_per_site.csv"))
-
+write.csv(tab_mod_coeff, file = paste0(dir_res_04, 
+                                       "table_model_coeff_per_habitat.csv"))
 
 # ------------------------------------------------------------------------------
-# represent the models
+# Ecosystem level
 # ------------------------------------------------------------------------------
 
-png(paste0(dir_save, 'plot_rank_abundance_within_sites.png'), 
-height = 20, width = 15, unit = 'cm', res = 400)
+load(file.path(dir_radfit, "ecosystem")) # object name = "fit"
 
-par(mfrow=c(5,2),oma=c(3,3,1,1), mar=c(2,2,1,1), las=1, mgp=c(3,0.3,0), tcl=-0.2) 
 
-for (nm_site in names_sites) {
 
-  tab <- round(table_sum_gene_abundance[, nm_site])
-  tab <- sort(tab[tab != 0], decreasing = TRUE)
-  bm <- names_best_models[nm_site]
-  mod <- fit_ecosystem[[nm_site]]$models[[bm]] 
-  ylim <- setrge(log(c(tab, mod$fitted.values)))
-  plot(1:length(tab), log(tab), xlim = c(0, 40000), ylim = ylim, 
-       main = names_sites_cplte[nm_site], cex = 1, col = "grey")
-  lines(log(mod$fitted.values), col = colors_sites[nm_site], lty = 1, lwd = 2)
-  legend(25000, max(ylim) - 0.01*diff(ylim), legend = bm, bty = "n", text.font = 3)
-  
-}
-par(las=0)
-mtext(2, text = "log(Summed gene abundance in the site)", line=.8, font=2, cex=1, outer=T)
-mtext(1, text = "Gene rank", line=1, font=2, cex=1, outer=T)
 
-graphics.off()
 
-png(paste0(dir_save, 'plot_rank_abundance_within_communities.png'), 
-    height = 20, width = 15, unit = 'cm', res = 400)
 
-par(mfrow=c(5,2),oma=c(3,3,1,1), mar=c(2,2,1,1), las=1, mgp=c(3,0.3,0), tcl=-0.2) 
 
-for (nm_site in names_sites) {
-  
-  tab <- round(table_avg_gene_abundance[, nm_site])
-  tab <- sort(tab[tab != 0], decreasing = TRUE)
-  ylim <- c(3, 14)  #round(setrge(log(tab)))
-  plot(NA, xlim = c(0, 34000), ylim = ylim, main = names_sites_cplte[nm_site],
-       cex = 1, col = "grey")
-  # loop on each community
-  lapply(rad_list[grep(nm_site, names(rad_list))], function(mod) {
-    dat <- mod$models[[bm]]$fitted.values
-    lines(log(dat), col = "#00000050", lty = 1, lwd = 2)
-  })
-  #legend("topright", legend = bm, bty = "n", text.font = 3)
-}
-par(las=0)
-mtext(2, text = "log(Gene abundance within the community)", line=.8, font=2, cex=1, outer=T)
-mtext(1, text = "Gene rank", line=1, font=2, cex=1, outer=T)
 
-graphics.off()

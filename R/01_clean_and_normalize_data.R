@@ -70,7 +70,7 @@ for(i in names(geochip)[-1]) {
 # change names of columns in geochip
 
 names(geochip)[c(1, 2, 3, 4, 5)] <- c("gene_id", "funct_trait", "funct_category",
-                                   "funct_process", "type_trait")
+                                      "funct_process", "type_trait")
 
 write.csv(geochip, file = paste0(dir_res_01, "labels_geochip.csv"), row.names = F)
 
@@ -121,7 +121,7 @@ logabund <- round(abundancelog, 3)
 # Save new csv for abundance presence/absence and abundance log 
 write.csv(abundance2, file = paste0(dir_save, "table_data_abundance_presabs.cvs"), row.names = F)
 write.csv(logabund, file = paste0(dir_save, "table_data_abundance_log.csv"), row.names = F)
-write.csv(abundance, file = paste0(dir_res_01, "rawdata_geochip.csv"), row.names = F)
+write.csv(abundance, file = paste0(dir_save, "rawdata_geochip.csv"), row.names = F)
 
 
 
@@ -135,80 +135,14 @@ write.csv(abundance, file = paste0(dir_res_01, "rawdata_geochip.csv"), row.names
 # Load the metadata of each site
 # Metadata <- read.csv(paste0(dir_data, "metadata.csv"))
 
-metadata <- read.csv(paste0(dir_data, "metadata.csv"))
+metadata <- read.table(paste0(dir_data, "metadata.csv"), sep = "\t", h = TRUE,
+                       row.names = 1)
 
 # Save metadata
 
-write.csv(metadata, file = paste0(dir_save, "metadata.csv"), row.names = F)
+write.csv(metadata, file = paste0(dir_save, "metadata.csv"), row.names = FALSE)
 
 
 ################################################################################
 #                             END OF SCRIPT                                    #
 ################################################################################
-
-
-
-
-# Determine the variables present in several datasets
-
-#vars <- c("Continent", "Ecosystem_type", "Site_name", "Site", "Sple_Code", "Country", 
-#          "Location", "Latitude", "Longitude", "Elevation", "pH", "C_Pct",
-#          "C_Total","N_Pct", "N_Total", "CN", "Moisture", "Temperature")
-
-# Keep only these variables and make a metadata table
-
-#tmp <- lapply(list_meta, function(x){ 
-#  x <- x[, names(x) %in% vars]
-#  vars_NA <- vars[! vars %in% names(x)]
-#  df <- data.frame(matrix(NA, nrow(x), length(vars_NA))) %>% setNames(vars_NA)
-#  cbind(x, df) %>% select(vars)
-#})
-
-#metadata <- do.call(rbind, tmp) %>% as.data.frame(row.names = 1:818) %>% 
-#  dplyr::rename(Sample = Sple_Code)
-
-# Look at the metadata distribution
-
-#vars_fact <- c("Continent", "Country", "Location", "Ecosystem_type", "Site")
-               
-#vars_num <- c("Elevation", "pH", "C_Pct", "C_Total","N_Pct", "N_Total", "CN", 
-#              "Moisture", "Temperature")
-
-#metadata[, vars_fact] <- apply(metadata[, vars_fact], 2, as.factor)
-#metadata[, vars_num]  <- apply(metadata[, vars_num], 2, as.numeric)
-
-#apply(metadata[, vars_fact], 2, table)
-#apply(metadata[, vars_num], 2, summary)
-
-#out <- rbind(do.call(rbind, lapply(split(metadata, metadata$Site), function(X) {
-#  apply(X, 2, function(x) round(sum(! is.na(x)) / nrow(X) * 100, 0))
-#})),
-#Total = apply(metadata, 2, function(x) round(sum(! is.na(x)) / 818 * 100, 0))
-#)
-
-# Save the metadata table
-
-#write.csv(metadata, file = paste0(dir_save, "metadata.csv"))
-#write.csv(out, file = paste0(dir_save, "table_summary_metadata.csv"))
-
-
-# make a table of average metadata per site
-
-#vars_fact <- c("Continent", "Country", "Location", "Ecosystem_type", "Site")
-
-#vars_num <- c("Elevation", "pH", "C_Pct", "C_Total","N_Pct", "N_Total", "CN", 
-#              "Moisture", "Temperature")
-
-#meta_site_fact <- do.call(rbind, lapply(split(metadata, metadata$Site_name), function(X) {
-#  X[1, vars_fact]
-#}))
-
-#meta_site_num  <- do.call(rbind, lapply(split(metadata, metadata$Site_name), function(X) {
-#  apply(X[, vars_num], 2, mean, na.rm = TRUE)
-#}))
-
-
-
-
-
-

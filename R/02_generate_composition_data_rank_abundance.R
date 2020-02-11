@@ -26,10 +26,9 @@ geochip <- read.csv(paste0(dir_res_01, "labels_geochip.csv"), row.names = 1)
 
 # Load the table matching different functional levels
 
-table_match_funct_levels <- read.csv(paste0(dir_res_01, 'table_match_funct_levels.csv'), row.names = 1)
+table_match_funct_levels <- read.csv(paste0(dir_res_01, 'table_match_funct_levels.csv'))
 
-# Load the abundance data list
-#data_list <- readRDS(paste0(dir_res_01, "data_list_logged.rds"))
+# Load the abundance data 
 
 table_data_abundance_log <- read.csv(paste0(dir_res_01, "table_data_abundance_log.csv"))
 

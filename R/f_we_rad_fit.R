@@ -1,3 +1,6 @@
+# This function fits SAd models to abundance data using the weecology tools library
+# it used in 04_rank_abundance_distribution.R
+
 we_rad_fit <- function(abund) {
   
   abund <- abund[abund != 0]
@@ -38,25 +41,25 @@ we_rad_fit <- function(abund) {
   
   #Making lists
   
-  p_list <- list(p_untruncated,
-                 p_pln,
-                 p_negbin,
-                 p_zipf)
+  p_list <- list(logseris  = p_untruncated,
+                 lognormal = p_pln,
+                 binomial  = p_negbin,
+                 zipf      = p_zipf)
   
-  AICc_list <- list(AICc_logser_untruncated,
-                    AICc_pln,
-                    AICc_negbin,
-                    AICc_zipf)
+  AICc_list <- list(logseris  = AICc_logser_untruncated,
+                    lognormal = AICc_pln,
+                    binomial  = AICc_negbin,
+                    zipf      = AICc_zipf)
   
-  likelihood_list <- list(L_logser_untruncated,
-                          L_pln,
-                          L_negbin,
-                          L_zipf)
+  likelihood_list <- list(logseris  = L_logser_untruncated,
+                          lognormal = L_pln,
+                          binomial  = L_negbin,
+                          zipf      = L_zipf)
   
-  relative_likelihood_list <- list(relative_ll_logser_untruncated,
-                                   relative_ll_pln,
-                                   relative_ll_negbin,
-                                   relative_ll_zipf)
+  relative_likelihood_list <- list(logseris  = relative_ll_logser_untruncated,
+                                   lognormal = relative_ll_pln,
+                                   binomial  = relative_ll_negbin,
+                                   zipf      = relative_ll_zipf)
   
   res <- list(parameters = p_list,
               AICc = AICc_list,
@@ -66,3 +69,18 @@ we_rad_fit <- function(abund) {
   res
   
 }#eo we_rad_fit
+
+
+
+# from : https://cran.r-project.org/web/packages/blmeco/index.html
+aic_comp <- function(AIC_values){
+  # AIC_values: vector with AIC values
+  delta_aic <- AIC_values - min(AIC_values)
+  expdelta_aic <- exp(-0.5*delta_aic)
+  aic_weights <- expdelta_aic/(sum(expdelta_aic))
+  best_mod <- ifelse(delta_aic == 0, 1, 0)
+  return(data.frame(aic = AIC_values, delta_aic = delta_aic, aic_weights = aic_weights, best_mod = best_mod))
+}
+
+
+
