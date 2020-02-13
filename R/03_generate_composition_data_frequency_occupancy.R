@@ -30,7 +30,6 @@ table_match_funct_levels <- read.csv(paste0(dir_res_01, 'table_match_funct_level
 table_abundance_presabs <- read.csv(paste0(dir_res_01, "table_data_abundance_presabs.csv"),
                                     row.names = 1)
 
-
 # the directory to save the results
 dir_save <- dir_res_03
 

@@ -20,17 +20,21 @@
 ################################################################################
 
 # Load the common label matrix
-CLM <- read.csv(paste0(dir_res_01, "table_common_label_matrix.csv"), row.names = 1)
+
+geochip <- read.csv(paste0(dir_res_01, "labels_geochip.csv"), row.names = 1)
 
 # Load the table matching different functional levels
+
 table_match_funct_levels <- read.csv(paste0(dir_res_01, 'table_match_funct_levels.csv'))
 
 # load composition data 
-num_q <- "q10"
+
+num_q <- "q5"
+funct_lev <- "funct_trait"
 
 data_compo_ab <- readRDS(paste0(dir_res_02, "tables_funct_compo_", num_q, ".rds"))
-data_compo_oc <- readRDS(paste0(dir_res_03, "ls_tables_function_composition.rds"))
-data_compo_oc <- data_compo_oc[[num_q]]
+data_compo_oc <- read.csv(paste0(dir_res_03, "table_function_composition_",
+                                 funct_lev, ".csv"))
 
 # the directory to save the results
 dir_save <- dir_res_07
@@ -49,14 +53,12 @@ diss_meth <- "jaccard"
 # Estimate dissimilarity within ecosystem
 # ==============================================================================
 
-diss_within_site_abundance <- lapply(data_compo_ab, function(funct_lev) {  
-  lapply(funct_lev, function(site) {                
-    vegdist(t(do.call(cbind, site)  ), diss_meth)
-  })
+ls_diss <- lapply(data_compo_ab, function(funct_lev) {  
+    vegdist(t(do.call(cbind, funct_lev)  ), diss_meth)
 })
 
-saveRDS(diss_within_site_abundance, 
-        file = paste0(dir_save, "diss_within_site_abundance_", diss_meth, ".rds"))
+saveRDS(ls_diss, 
+        file = paste0(dir_save, "list_dissimilarity_", diss_meth, ".rds"))
 
 
 # ==============================================================================
@@ -64,10 +66,8 @@ saveRDS(diss_within_site_abundance,
 # ==============================================================================
 
 dca_abundance <- lapply(data_compo_ab, function(funct_lev) {  
-  lapply(funct_lev, function(site) {                
-    site <- do.call(cbind, site)  
-    decorana(t(site))
-  })
+    dat <- do.call(cbind, funct_lev)  
+    decorana(t(dat))
 })
 
 saveRDS(dca_abundance, file = paste0(dir_save, "dca_abundance_", diss_meth, ".rds"))
@@ -89,12 +89,12 @@ for (X in 1:3) {
       las = 1, xaxs = 'i', yaxs = "i", tcl = -0.2)
   
   lapply(names_sites, function(nm_site) {
-    toPlot <- summary(dca_abundance[[funct_lev]][[nm_site]])$site.scores[, c(1, 2)]
+    toPlot <- summary(dca_abundance[[funct_lev]])$site.scores[, c(1, 2)]
     cex <- as.vector(rep(2.5 * seq(2, 15, length.out=10) / 10, nrow(toPlot) / 10))
     xlim <- round(setrge(toPlot[,1]),2)
     ylim <- round(setrge(toPlot[,2]),2)
-    plot(toPlot, pch = 21, bg = paste0(colors_sites[nm_site], 20),
-          col = paste0(colors_sites[nm_site], 60), cex = cex, main = '', 
+    plot(toPlot, pch = 21, bg = metadata$Type,
+          col = metadata$Type, cex = cex, main = '', 
          xlab = '', ylab = '', xlim = xlim, ylim = ylim)
     text(apply(toPlot, 2, function(x) tapply(x, cex, mean)), 
          labels = 1:10, cex = 1, font = 2, adj = 0.5, col = "black")

@@ -24,7 +24,7 @@ geochip = read.csv(paste0(dir_res_01, "labels_geochip.csv"), row.names = 1)
 
 # Load the raw data list
 
-abundance <- read.csv(paste0(dir_res_01, "rawdata_geochip.csv"))
+abundance <- read.csv(paste0(dir_res_01, "rawdata_geochip.csv"), row.names = 1)
 
 # Load metadata
 
@@ -91,7 +91,7 @@ dir.create(paste0(dir_save, "radfit/", "samples/" ))
 
 # transpose data
 
-rad_tab <- t(abundance)
+rad_tab <- round(t(abundance))
 row.names(rad_tab) <- names(abundance)
 
 # Loop on each sample and fit RAD models
