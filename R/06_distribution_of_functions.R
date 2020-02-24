@@ -128,14 +128,16 @@ saveRDS(res_lm_fit, file = paste0(dir_save, "res_lm_fits_rank_vs_weight_q", num_
 
 # for each function make a plot of the model for a random subset of 64 samples
 
-dir.create(paste0(dir_save, "plots_model/"))
-dir.create(paste0(dir_save, "plots_model/", num_q))
+dir_mods <- paste0(dir_save, "plots_model/", funct_lev, "/")
+dir_mods_plot <- paste0(dir_mods,num_q)
+dir.create(dir_mods)
+dir.create(dir_mods_plot)
 
 
 for (X in 1:length(res_lm_fit)) {
   
   nm <- names(res_lm_fit)[X]
-  png(paste0(dir_save, "plots_model/", num_q, "/plot_model_weight_Rank_", nm, ".png" ),
+  png(paste0(dir_mods_plot, "/plot_model_weight_Rank_", nm, ".png" ),
       height = 30, width = 30, unit = "cm", res = 200)
   
   par(mfrow = c(6,4), mar = c(2,2,1,1), oma = c(1,1,1,1))
@@ -156,14 +158,16 @@ for (X in 1:length(res_lm_fit)) {
 
 # take a look at the models R2
 
-dir.create(paste0(dir_save, "plots_rsquare/"))
+dir_r2 <- paste0(dir_save, "plots_rsquare/", funct_lev, "/")
+dir_r2_plot <- paste0(dir_r2,num_q)
+dir.create(dir_r2)
+dir.create(dir_r2_plot)
 
-dir.create(paste0(dir_save, "plots_rsquare/", num_q))
 
 lapply(list(1:25, 26:50, 51:75, 76:100, 101:125, 
             126:150, 151:175, 176:194), function(X) {
               
-              png(paste0(dir_save, "plots_rsquare/", num_q, "/plot_model_rsquare_", X[1], "_", X[length(X)], ".png" ),
+              png(paste0(dir_r2_plot, "/plot_model_rsquare_", X[1], "_", X[length(X)], ".png" ),
                   height = 30, width = 50, unit = "cm", res = 200)
               
               par(mfrow = c(5,5), mar = c(2,2,1,1), oma = c(1,1,1,1))
@@ -216,11 +220,11 @@ res_lm_tab <- lapply(res_lm_fit, function(x_funct) {
 }) %>% reformat_as_df(new_var_name = funct_lev) %>% 
   left_join(table_match_funct_levels, by = funct_lev)
 
-saveRDS(res_lm_tab, file = paste0(dir_save, "res_table_lm_rank_vs_weight_", 
-                                  funct_lev, ".rds"))
+saveRDS(res_lm_tab, file = paste0(dir_save, "res_table_lm_rank_vs_weight_q",
+                                  num_q, "_", funct_lev, ".rds"))
 
-write.csv(res_lm_tab, file = paste0(dir_save, "res_table_lm_rank_vs_weight_", 
-                                    funct_lev, ".csv"), row.names = FALSE)
+write.csv(res_lm_tab, file = paste0(dir_save, "res_table_lm_rank_vs_weight_q", 
+                                    num_q, "_", funct_lev, ".csv"), row.names = FALSE)
 
 # 
 dim(res_lm_tab)
@@ -231,7 +235,8 @@ do.call(rbind, lapply(seq(0, 1, 0.1), function(x) {
   out <- res_lm_tab %>% filter( rsquare > x) %>% nrow()
   c(out, round(out / nrow(res_lm_tab), 1))
 })) %>% as.data.frame %>% 
-  setNames(c("num_models_with_r2_>_thd", "prop_models_with_r2_>_thd"))
+  setNames(c("num_models_with_r2_>_thd", "prop_models_with_r2_>_thd")) %>% 
+  mutate(r2_thd = seq(0, 1, 0.1))
 
 
 
