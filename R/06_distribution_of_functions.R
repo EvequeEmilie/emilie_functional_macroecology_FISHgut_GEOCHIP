@@ -45,8 +45,6 @@ dir_save <- dir_res_06
 
 ################################################################################
 
-# For observed data ------------------------------------------------------------
-
 for (num_q in c(5, 10, 15, 20)) { # loop on the number of quantiles
 
 # load composition data
@@ -200,6 +198,10 @@ lapply(list(1:25, 26:50, 51:75, 76:100, 101:125,
 # res_lm_fit <- readRDS(paste0(dir_save, "res_model_fits_rank_vs_weight_q", num_q, "_", 
 #                       funct_lev, ".rds"))
 
+tab_match <- do.call(rbind, lapply(split(table_match_funct_levels, 
+                                         table_match_funct_levels[, funct_lev]), 
+                                   function(x) { x[1,]}))
+
 res_lm_tab <- lapply(res_lm_fit, function(x_funct) {
   
   res <- do.call(rbind, lapply(x_funct[!is.na(x_funct)], function(fit) {
@@ -218,7 +220,8 @@ res_lm_tab <- lapply(res_lm_fit, function(x_funct) {
     left_join(metadata, by = "Sample")
   res
 }) %>% reformat_as_df(new_var_name = funct_lev) %>% 
-  left_join(table_match_funct_levels, by = funct_lev)
+  left_join(tab_match, by = funct_lev)
+
 
 saveRDS(res_lm_tab, file = paste0(dir_save, "res_table_lm_rank_vs_weight_q",
                                   num_q, "_", funct_lev, ".rds"))
